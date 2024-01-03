@@ -1,0 +1,75 @@
+#App
+
+  canvas(width='48px' height='64px')#textureModel
+  
+  input.color-input.layer-1
+  input.color-input.layer-2
+  input.color-input.layer-3
+
+  .cube()
+    canvas.face.face-left(width='150px' height='150px')
+    canvas.face.face-right(width='150px' height='150px')
+    canvas.face.face-top(width='150px' height='150px')
+    
+  .side-menu
+    .content
+      .title
+        .color-picker.layer-1(
+          :style  = `{
+            background: "rgb(" + colors[0].join(",") + ")"
+          }`
+        )
+        .layer-name layer 1
+      .textures
+        .item(
+          v-for  = 'e, index in Array(14)'
+          :class = `{
+            'selected' : index === selectedTexture[0]
+          }`
+          :style = `{
+            'background-image': 'url(' + baseURL + '1/' + index + '.png?)'
+          }`
+          @click = 'drawTexture(0, index, false)'
+        )
+    .content
+      .title
+        .color-picker.layer-2(
+          :style  = `{
+            background: "rgb(" + colors[1].join(",") + ")"
+          }`
+        )
+        .layer-name layer 2
+      .textures
+        .item(
+          v-for  = 'e, index in Array(20)'
+          :class = `{
+            'selected' : index === selectedTexture[1]
+          }`
+          :style = `{
+            "background-image": "url(" + baseURL + "2/" + index + ".png?raw=true)"
+          }`
+          @click = 'drawTexture(1, index, false)'
+        )
+        .clear-layer(@click='clearLayer(1)')
+          i.material-icons delete
+    .content
+      .title
+        .color-picker.layer-3(
+          :style  = `{
+            background: "rgb(" + colors[2].join(",") + ")"
+          }`
+        )
+        .layer-name layer 3
+      .textures
+        .item(
+          v-for  = 'e, index in Array(3)'
+          :class = `{
+            'selected' : index === selectedTexture[2]
+          }`
+          :style = `{
+            "background-image": "url(" + baseURL + "3/" + index + "_1.png?raw=true)"
+          }`
+          @click = 'drawTexture(2, index, true)'
+        )
+        .clear-layer(@click='clearLayer(2)')
+          i.material-icons delete

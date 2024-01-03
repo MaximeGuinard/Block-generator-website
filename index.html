@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Créez ton modèles de blocs Pack de Texture Minecraft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="img/favicon.png" type="image/x-icon">
+      <meta name="author" content="GUINARD Maxime">
+    <meta name="keywords" content="developmentsource, development, développeur, lua, python, html, css, seo, sea, sea fr, seo fr, glua, gmod, garry'smod, maximeguinard">
+         <meta name="description" content="Utilisez le Minecraft Block Generator pour créer des blocs personnalisés pour votre jeu Minecraft. Choisissez la forme, la texture et les couleurs.">
+<link rel="canonical" href="https://minigame-maxime-guinard.fr/blockgenerator/" />
+<meta property="og:locale" content="fr_FR" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Utilisez le Minecraft Block Generator pour créer des blocs personnalisés pour votre jeu Minecraft. Choisissez la forme, la texture et les couleurs de votre bloc et exportez le modèle directement dans le jeu." />
+<meta property="og:description" content="Utilisez le Minecraft Block Generator pour créer des blocs personnalisés pour votre jeu Minecraft. Choisissez la forme, la texture et les couleurs de votre bloc et exportez le modèle directement dans le jeu." />
+<meta property="og:url" content="https://minigame-maxime-guinard.fr/blockgenerator/" />
+<meta property="og:site_name" content="Maxime GUINARD" />
+<meta property="article:section" content="Game" />
+<meta property="og:updated_time" content="2023-03-08T15:05:39+00:00" />
+<meta property="og:image" content="https://maxime-guinard.fr/wp-content/uploads/2023/02/webflow-sur-tablet-scaled.jpg" />
+<meta property="og:image:secure_url" content="https://maxime-guinard.fr/wp-content/uploads/2023/02/webflow-sur-tablet-scaled.jpg" />
+<meta property="og:image:width" content="1024" />
+<meta property="og:image:height" content="683" />
+<meta property="og:image:alt" content="click speed test logitech" />
+<meta property="og:image:type" content="image/jpeg" />
+<meta property="article:published_time" content="2023-03-08T14:58:51+00:00" />
+<meta property="article:modified_time" content="2023-03-08T15:05:39+00:00" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Minecraft Block Generator - Créez des modèles de blocs personnalisés" />
+<meta name="twitter:description" content="Utilisez le Minecraft Block Generator pour créer des blocs personnalisés pour votre jeu Minecraft. Choisissez la forme, la texture et les couleurs de votre bloc et exportez le modèle directement dans le jeu." />
+<meta name="twitter:image" content="https://maxime-guinard.fr/wp-content/uploads/2023/02/webflow-sur-tablet-scaled.jpg" />
+<meta name="twitter:label1" content="Écrit par" />
+<meta name="twitter:data1" content="Maxime GUINARD" />
+<meta name="twitter:label2" content="Temps de lecture" />
+<meta name="twitter:data2" content="4 minutes" />
+<style>
+    @font-face {
+    font-family: 'Recoleta-Medium';
+    src: url('fonts/Recoleta-Medium.woff2') format('woff2'),
+         url('fonts/Recoleta-Medium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+  }
+body {
+margin: 0;
+background: #C3AD77;
+font-family: 'Recoleta-Medium', sans-serif;
+}
+
+header {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+background-color: #fff;
+z-index: 999;
+font-size: 1em;
+color: white;
+text-align: center;
+height: 50px; /* Spécifie la hauteur de l'en-tête */
+padding: 0.5em 0;
+}
+
+nav {
+display: inline-block;
+}
+
+ul {
+list-style: none;
+padding: 0;
+}
+
+li {
+display: inline-block;
+margin-right: 20px;
+color: #060617;
+}
+
+a {
+color: #060617;
+}
+  </style>
+  <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:300|Material+Icons'>
+<link rel='stylesheet' href='https://rawgit.com/bgrins/spectrum/master/spectrum.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+      <header>
+      <nav>
+        <ul>
+    <li><a href="https://minigame-maxime-guinard.fr/blockgenerator/faq-block-generator.html">FAQ de Block Generator</a></li>
+    <li><a href="https://minigame-maxime-guinard.fr/blockgenerator/pack-de-texture-minecraft.html">Tout savoir sur les packs Minecraft</a></li>
+        </ul>
+      </nav>
+        </header>
+    <h1>Minecraft Block Generator pour les packs de texture</h1>
+
+<!-- partial:index.partial.html -->
+<div id="App">
+  <canvas width="48px" height="64px" id="textureModel"></canvas>
+  <input class="color-input layer-1"/>
+  <input class="color-input layer-2"/>
+  <input class="color-input layer-3"/>
+  <div class="cube">
+    <canvas class="face face-left" width="150px" height="150px"></canvas>
+    <canvas class="face face-right" width="150px" height="150px"></canvas>
+    <canvas class="face face-top" width="150px" height="150px"></canvas>
+  </div>
+  <div class="side-menu">
+    <div class="content">
+      <div class="title">
+        <div class="color-picker layer-1" :style="{
+            background: &quot;rgb(&quot; + colors[0].join(&quot;,&quot;) + &quot;)&quot;
+          }"></div>
+        <div class="layer-name">Couche 1</div>
+      </div>
+      <div class="textures">
+        <div class="item" v-for="e, index in Array(14)" :class="{
+            'selected' : index === selectedTexture[0]
+          }" :style="{
+            'background-image': 'url(' + baseURL + '1/' + index + '.png?)'
+          }" @click="drawTexture(0, index, false)"></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="title">
+        <div class="color-picker layer-2" :style="{
+            background: &quot;rgb(&quot; + colors[1].join(&quot;,&quot;) + &quot;)&quot;
+          }"></div>
+        <div class="layer-name">Couche 2</div>
+      </div>
+      <div class="textures">
+        <div class="item" v-for="e, index in Array(20)" :class="{
+            'selected' : index === selectedTexture[1]
+          }" :style="{
+            &quot;background-image&quot;: &quot;url(&quot; + baseURL + &quot;2/&quot; + index + &quot;.png?raw=true)&quot;
+          }" @click="drawTexture(1, index, false)"></div>
+        <div class="clear-layer" @click="clearLayer(1)"><i class="material-icons">delete</i></div>
+      </div>
+    </div>
+    <div class="content">
+      <div class="title">
+        <div class="color-picker layer-3" :style="{
+            background: &quot;rgb(&quot; + colors[2].join(&quot;,&quot;) + &quot;)&quot;
+          }"></div>
+        <div class="layer-name">Couche 3</div>
+      </div>
+      <div class="textures">
+        <div class="item" v-for="e, index in Array(3)" :class="{
+            'selected' : index === selectedTexture[2]
+          }" :style="{
+            &quot;background-image&quot;: &quot;url(&quot; + baseURL + &quot;3/&quot; + index + &quot;_1.png?raw=true)&quot;
+          }" @click="drawTexture(2, index, true)"></div>
+        <div class="clear-layer" @click="clearLayer(2)"><i class="material-icons">delete</i></div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="application/ld+json">{
+"@context": "https://schema.org/",
+"@type": "CreativeWorkSeries",
+"name": "Block Generator Minecraft",
+"aggregateRating": {
+"@type": "AggregateRating",
+"ratingValue": "5",
+"bestRating": "5",
+"ratingCount": "95"
+}
+}</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Qu'est-ce que le Minecraft Block Generator ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Le Minecraft Block Generator est un outil en ligne qui permet de générer des modèles de blocs pour le jeu Minecraft. Vous pouvez personnaliser la forme, la taille, la texture et les couleurs du bloc pour créer un modèle unique qui peut ensuite être exporté dans le jeu."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Comment puis-je utiliser le Minecraft Block Generator ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pour utiliser le Minecraft Block Generator, rendez-vous sur le site web de l'outil et commencez par choisir la forme de bloc que vous souhaitez créer. Ensuite, personnalisez la taille, la texture et les couleurs du bloc en utilisant les options disponibles. Une fois que vous êtes satisfait du résultat, vous pouvez exporter le modèle dans le jeu en copiant le code généré et en le collant dans le fichier de configuration approprié dans le dossier Minecraft."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Le Minecraft Block Generator est-il gratuit ?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Oui, le Minecraft Block Generator est entièrement gratuit à utiliser. Il n'est pas nécessaire de créer un compte ou de télécharger un logiciel pour utiliser l'outil. Toutefois, il est important de noter que l'outil ne fonctionne que pour la création de modèles de blocs pour Minecraft et ne fournit pas de fonctionnalités de modification du jeu ou de triche."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+    {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Minecraft Block Generator",
+  "url": "https://minigame-maxime-guinard.fr/blockgenerator/",
+  "logo": "https://maxime-guinard.fr/wp-content/uploads/2023/02/Logo_Maxime_BLANC-e1675516847866.png.webp",
+  "description": "Le Minecraft Block Generator offre des fonctionnalités telles que la personnalisation des couleurs, des motifs, des détails et des effets visuels des blocs de texture, ainsi que la prévisualisation en temps réel des modifications apportées.",
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": "123 Rue du Block Generator",
+    "addressLocality": "Block Generator",
+    "postalCode": "12345",
+    "addressCountry": "France"
+  },
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "telephone": "0665132436",
+    "contactType": "customer support"
+  },
+  "sameAs": [
+    "https://www.instagram.com/maxime.guinard.dev/",
+    "https://github.com/MaximeGuinard",
+    "https://www.linkedin.com/notifications/?filter=all"
+  ]
+}
+</script>
+<script type="application/ld+json">
+  {
+  "@context": "https://schema.org",
+  "@type": "VideoObject",
+  "name": "Comment CRÉER son PACK DE TEXTURE sur Minecraft (tuto pack)",
+  "description": "Yo les gars ! Comment CRÉER son PACK DE TEXTURE sur Minecraft (tuto)",
+  "thumbnailUrl": "https://blog.maxime-guinard.fr/wp-content/uploads/2023/05/plusieurs-personne-qui-ecoute-un-discours-570x420.jpg",
+  "uploadDate": "2023-05-30",
+  "duration": "PT5M30S",
+  "contentUrl": "https://www.youtube.com/watch?v=Uy-pjDGnOL8",
+  "embedUrl": "https://www.youtube.com/watch?v=Uy-pjDGnOL8",
+  "interactionCount": "12345"
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Block Generator",
+      "item": "https://minigame-maxime-guinard.fr/blockgenerator/"
+    }
+  ]
+}
+</script>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.11/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jcanvas/21.0.1/min/jcanvas.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js'></script><script  src="./script.js"></script>
+<footer class="b-r b-large b-solid">
+  &copy;
+  <span x-data x-text="new Date().getFullYear()"></span>
+  <a href="https://minigame-maxime-guinard.fr/blockgenerator/faq-block-generator.html">FAQ de Block Generator</a> - <a href="https://minigame-maxime-guinard.fr/blockgenerator/pack-de-texture-minecraft.html">Tout savoir sur les packs Minecraft</a> -
+</footer><br><br>
+
+  <img src="img/block.jpg" alt="Description de l'image" width="500" height="300"><br><br>
+  <h2>Qu'est-ce que le Minecraft Block Generator ?</h2>
+  <p>Le Minecraft Block Generator est un outil en ligne qui facilite la création de packs de texture personnalisés pour Minecraft. Il permet aux joueurs de générer des blocs de texture personnalisés en quelques clics, sans nécessiter de compétences en codage.</p>
+  
+  <h2>Pourquoi utiliser le Minecraft Block Generator pour les packs de texture ?</h2>
+  <p>Le Minecraft Block Generator simplifie et accélère le processus de <a href="https://fr.wikihow.com/r%C3%A9aliser-un-pack-de-textures-pour-Minecraft" rel="noopener" target="_blank">création de packs de texture</a> en fournissant une interface conviviale. Il offre une variété d'options de personnalisation, permettant aux joueurs de créer des textures uniques et adaptées à leurs préférences.</p>
+  
+  <h2>Comment utiliser le Minecraft Block Generator ?</h2>
+  <p>Pour utiliser le Minecraft Block Generator, les joueurs peuvent accéder à l'outil en ligne et sélectionner les éléments de texture qu'ils souhaitent personnaliser. Ils peuvent ajuster les couleurs, les motifs et les détails des blocs, et prévisualiser leurs modifications en temps réel.</p>
+  
+  <h2>Personnalisation avancée des packs de texture</h2>
+  <p>Le Minecraft Block Generator offre des options avancées de personnalisation pour les packs de texture</a>. Les joueurs peuvent modifier les propriétés des blocs, comme la luminosité, les matériaux, les variations et les effets visuels, pour créer des textures uniques et détaillées.</p>
+  
+  <h2>Partage et utilisation des packs de texture générés</h2>
+  <p>Une fois les packs de texture créés avec le Minecraft Block Generator, ils peuvent être téléchargés et partagés avec d'autres joueurs. Les packs de texture personnalisés peuvent être utilisés pour modifier l'apparence visuelle du jeu, ajoutant une touche personnelle à l'expérience de jeu de chaque joueur.</p>
+  
+  <h2>Avantages du Minecraft Block Generator pour les créateurs de packs de texture</h2>
+  <p>Le Minecraft Block Generator simplifie considérablement le processus de création de packs de texture, permettant aux créateurs de se concentrer sur la conception artistique plutôt que sur le codage complexe. Il offre une solution rapide, intuitive et puissante pour réaliser des packs de texture personnalisés de qualité.</p>
+
+</body>
+</html>

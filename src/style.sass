@@ -1,0 +1,239 @@
+#App
+  height: 100vh
+  display: flex
+  justify-content: space-around
+  align-items: center
+  
+  
+  
+.cube
+  width: 150px
+  height: 150px
+  margin-right: 200px
+  transform: rotateX( -30deg ) rotateY( 45deg )
+  transform-style: preserve-3d
+  transition: .2s
+
+  &:hover
+    transform: rotateX( -30deg ) rotateY( 15deg )
+    cursor: pointer
+  
+  .face
+    background: #eceff1
+    position: absolute
+    
+    &.face-right
+      transform: translateZ(75px)
+      filter: brightness(90%)
+
+    &.face-left
+      transform: translateZ(-75px) rotateY(-90deg)
+      transform-origin: left
+      filter: brightness(75%)
+
+    &.face-top
+      transform: translateZ(75px) translateY(.6px) rotateX(-90deg)
+      transform-origin: top
+      filter: brightness(110%)
+  
+      
+      
+#textureModel
+  display: none
+  
+  
+.side-menu
+  width: 200px
+  height: 100%
+  padding: 10px 0
+  background: #212121
+  color: #FFF
+  overflow: scroll
+  position: fixed
+  right: 0
+  top: 0
+  
+  .content
+    border-bottom: 1px solid #37474f
+    margin-bottom: 10px
+    
+    .title
+      padding: 10px 0
+      display: flex
+      justify-content: space-evenly
+      align-items: center
+      
+      .color-picker
+        width: 35px
+        height: 35px
+        background: #FFF
+        transition: .2s
+        
+        &:hover
+          transform: rotate(90deg) scale(1.2)
+          cursor: pointer
+        
+      .layer-name
+        font-size: 1.3em
+        
+    .textures
+      padding: 15px 0
+      display: grid
+      justify-content: center
+      grid-template-columns:  auto auto auto auto
+      grid-column-gap: 6px
+      grid-row-gap: 6px
+        
+      .item
+        width: 35px
+        height: 35px
+        outline: 1px solid transparent
+        outline-offset: 1.5px
+        background: no-repeat center / cover
+        image-rendering: pixelated
+        color: red
+        transition: .3s
+        
+        &:hover
+          outline: 1px solid #90a4ae
+          outline-offset: 1.5px
+          cursor: pointer
+        
+        &.selected
+          outline: 1px solid #03a9f4
+          outline-offset: 1px
+          
+      .clear-layer
+        width: 35px
+        height: 35px
+        display: flex
+        justify-content: center
+        align-items: center
+        
+        &:hover
+          cursor: pointer
+        
+          i.material-icons
+            color: #ef5350
+        
+        i.material-icons
+          font-size: 1.6em
+          transition: .2s
+        
+        
+        
+::-webkit-scrollbar
+  width: 7px
+  height: 0
+
+::-webkit-scrollbar-button
+  width: 0
+  height: 0
+
+::-webkit-scrollbar-thumb
+  background: none
+  border: none
+  border-left: 3px solid rgba(#FFF, .2)
+
+  &:hover
+    border-left-color: rgba(#03A9F4, .5)
+
+  &:active
+    border-left-color: #03A9F4
+
+
+
+.color-input + .sp-replacer
+  display: none
+  
+  
+.sp-container
+  width: 200px
+  height: 100%
+  padding: 0
+  background: #212121
+  border: none
+  position: fixed !important
+  left: auto !important
+  right: 0px !important
+  top: 0 !important
+  display: flex
+  flex-direction: column
+  justify-content: center
+  align-items: center
+  transition: .3s
+    
+  &.sp-hidden
+    right: -200px !important
+    display: flex !important
+  
+  .sp-palette-container
+    width: 140px
+    border: none
+    
+    .sp-thumb-el
+      width: 25px
+      height: 25px
+      margin: 0 0 7px 5px
+      background: none
+      border: none
+        
+      &.sp-thumb-active .sp-thumb-inner
+        background: none
+        box-shadow: 0 0 0 .6px #212121, 0 0 0 2px #78909c
+      
+      .sp-thumb-inner
+        border-radius: 50%
+
+  .sp-picker-container
+    width: 200px
+    margin-top: 10px
+    border: none
+    
+    .sp-top
+      
+      .sp-color
+        width: 140px
+        height: 140px
+        padding: 0 2px 1px 0
+        margin-left: 17px
+        border: none
+        
+        .sp-dragger
+          width: 10px
+          height: 10px
+          margin: 5px
+          background: none
+      
+      .sp-hue
+        width: 13px
+        height: 140px
+        margin: -2px 0 0 3px
+        border: none
+        border-radius: 3px
+        
+        .sp-slider
+          width: 17px
+          height: 17px
+          margin: 7px 0 0 -1px
+          border-radius: 50%
+          border: none
+          opacity: 1
+      
+    .sp-initial
+      display: none
+      
+    .sp-button-container
+      width: 100%
+      margin-top: 20px
+      padding-top: 10px
+      border-top: 1px solid #37474f
+      
+      .sp-choose
+        padding: 8px 20px
+        background: #FFF
+        border: none
+        
+      .sp-cancel
+        margin: 0 40px 0 40px
+        color: #ef5350 !important

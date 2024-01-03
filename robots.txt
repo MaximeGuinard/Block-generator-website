@@ -1,0 +1,7 @@
+User-agent: *
+Disallow: /css/*
+
+Sitemap: https://block.generator.maxime-guinard.fr/sitemap.xml
+
+User-agent: CCBot
+Disallow: /
